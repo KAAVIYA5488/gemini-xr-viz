@@ -30,7 +30,7 @@
         <a-icosahedron radius="0.2" color="#66FCF1" wireframe="true" animation="property: rotation; to: 360 360 0; dur: 6000; loop: true; easing: linear"></a-icosahedron>
         
         <a-plane position="-1.4 -0.2 0" width="2.2" height="0.9" color="#0B0C10" opacity="0.9" material="shader: flat">
-          <a-text id="aiText" value="Welcome to the Simulator.\nLet's see how I process and finish\nthis sentence:\n'The dog barks at the...'" align="center" position="0 0.1 0.05" scale="0.45 0.45 0.45" color="#66FCF1"></a-text>
+          <a-text id="aiText" value="System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and enter the\nneural network." align="center" position="0 0.1 0.05" scale="0.45 0.45 0.45" color="#66FCF1"></a-text>
         </a-plane>
 
         <a-box id="navBtn" class="clickable" position="-1.4 -0.45 0.05" width="1" height="0.15" depth="0.05" color="#66FCF1"
@@ -40,7 +40,6 @@
       </a-entity>
 
       <a-entity id="scene0" visible="true" position="0 0 -2">
-        <a-torus radius="0.8" radius-tubular="0.02" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 1" animation="property: rotation; to: 0 360 0; dur: 10000; loop: true; easing: linear"></a-torus>
         <a-text value="THE DOG BARKS AT THE..." align="center" position="0 0 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
       </a-entity>
 
@@ -159,7 +158,7 @@
       // ==========================================
       // SCENE MANAGEMENT & LOGIC
       // ==========================================
-      let currentStep = 0;
+      let currentStep = 0; // Starts at 0 (Scene 0)
       const scenes = [
         document.querySelector('#scene0'),
         document.querySelector('#scene1'),
@@ -171,10 +170,10 @@
       const navBtn = document.querySelector('#navBtn');
       const navText = document.querySelector('#navText');
 
-      // Updated storyline to focus on the sentence
+      // The Audio Fix: Combined the Welcome message into Step 1 so it plays after the click unlocks the audio.
       const dialogue = [
-        "Welcome to the Simulator.\nLet's see how I process and finish\nthis sentence:\n'The dog barks at the...'",
-        "Step 1: Tokenization.\nI don't read words. I break the sentence\ninto puzzle pieces called tokens.\n\nClick the pink block to chop it up.",
+        "System Ready.", // This is just a placeholder for index 0. It is never spoken.
+        "Welcome to the simulator! Let's process the sentence: 'The dog barks at the...'\n\nStep 1: Tokenization.\nI don't read words. I break the sentence\ninto puzzle pieces called tokens.\n\nClick the pink block to chop it up.",
         "Step 2: Self-Attention.\nHow do I know what 'barks' means?\nI connect it to surrounding tokens.\n\nClick 'barks' to see its connections.",
         "Step 3: Probabilities & Temperature.\nI guess the next word based on math.\nLow Temp = Safest guess.\nHigh Temp = Creative guess.\n\nToggle the Temperature to see!"
       ];
@@ -183,20 +182,27 @@
         initAudio(); 
         playSound('click');
 
+        // Hide current scene
         scenes[currentStep].setAttribute('visible', 'false');
         
         currentStep++;
         if (currentStep >= scenes.length) {
           currentStep = 0; 
           resetInteractions(); 
+          // If we reset back to 0, stop here and wait for the user to click Start again.
+          scenes[0].setAttribute('visible', 'true');
+          aiText.setAttribute('value', "System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and enter the\nneural network.");
+          navText.setAttribute('value', 'START TOUR >');
+          return;
         }
 
+        // Show new scene
         scenes[currentStep].setAttribute('visible', 'true');
         aiText.setAttribute('value', dialogue[currentStep]);
         speakDialogue(dialogue[currentStep]); 
         
-        if (currentStep === 0) navText.setAttribute('value', 'START TOUR >');
-        else if (currentStep === 3) navText.setAttribute('value', 'RESTART TOUR');
+        // Update Button Text
+        if (currentStep === 3) navText.setAttribute('value', 'RESTART TOUR');
         else navText.setAttribute('value', 'NEXT STATION >');
       });
 
@@ -250,7 +256,6 @@
           tempText.setAttribute('value', 'Temperature: HIGH\n(Creative Guess)');
           tempText.setAttribute('color', '#FFF');
           
-          // Flatten the probabilities
           prob1.setAttribute('value', 'mailman (35%)');
           prob1.setAttribute('color', '#FFF');
           prob1.setAttribute('scale', '0.4 0.4 0.4');
@@ -259,7 +264,7 @@
           prob2.setAttribute('color', '#FFF');
           
           prob3.setAttribute('value', 'UFO (25%)');
-          prob3.setAttribute('color', '#EF2D5E'); // Highlighted selection
+          prob3.setAttribute('color', '#EF2D5E'); 
           prob3.setAttribute('scale', '0.5 0.5 0.5');
 
           outputText.setAttribute('value', 'Result: The dog barks at the UFO');
@@ -270,9 +275,8 @@
           tempText.setAttribute('value', 'Temperature: LOW\n(Safe Guess)');
           tempText.setAttribute('color', '#0B0C10');
           
-          // Skewed probabilities (Low Temp)
           prob1.setAttribute('value', 'mailman (88%)');
-          prob1.setAttribute('color', '#00E5FF'); // Highlighted selection
+          prob1.setAttribute('color', '#00E5FF'); 
           prob1.setAttribute('scale', '0.5 0.5 0.5');
           
           prob2.setAttribute('value', 'cat (10%)');
@@ -289,5 +293,38 @@
       });
 
       function resetInteractions() {
+          // Reset Station 1
           textBlock.setAttribute('visible', 'true');
-          tokenContainer.setAttribute('
+          tokenContainer.setAttribute('visible', 'false');
+          
+          // Reset Station 2
+          centerToken.setAttribute('color', '#EF2D5E');
+          centerToken.setAttribute('material', 'emissive: #EF2D5E; emissiveIntensity: 0.5');
+          attentionWeb.removeAttribute('line__1');
+          attentionWeb.removeAttribute('line__2');
+          attentionWeb.removeAttribute('line__3');
+          
+          // Reset Station 3
+          isHighTemp = false;
+          tempToggle.setAttribute('color', '#00E5FF');
+          tempText.setAttribute('value', 'Temperature: LOW\n(Safe Guess)');
+          tempText.setAttribute('color', '#0B0C10');
+          
+          prob1.setAttribute('value', 'mailman (88%)');
+          prob1.setAttribute('color', '#00E5FF');
+          prob1.setAttribute('scale', '0.5 0.5 0.5');
+          
+          prob2.setAttribute('value', 'cat (10%)');
+          prob2.setAttribute('color', '#FFF');
+          prob2.setAttribute('scale', '0.4 0.4 0.4');
+          
+          prob3.setAttribute('value', 'UFO (2%)');
+          prob3.setAttribute('color', '#666');
+          prob3.setAttribute('scale', '0.3 0.3 0.3');
+
+          outputText.setAttribute('value', 'Result: The dog barks at the mailman');
+          outputText.setAttribute('color', '#00E5FF'); 
+      }
+    </script>
+  </body>
+</html>
