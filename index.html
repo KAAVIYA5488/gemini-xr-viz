@@ -2,29 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>LLM WebXR Viz - Complete Pipeline</title>
+    <title>LLM WebXR Viz - Complete Spatial Pipeline</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   </head>
   <body>
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       
-      <a-sky color="#0B0C10"></a-sky>
-      <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#1F2833" material="roughness: 0.4; metalness: 0.6"></a-plane>
-      <a-grid src="https://cdn.aframe.io/images/grid.png" position="0 0.01 0"></a-grid>
+      <a-assets>
+          <img id="datacenterPano" src="https://image.api.playgroundai.com/static/image/image_0.png" crossorigin="anonymous">
+      </a-assets>
 
-      <a-entity id="rig" position="0 0 3">
+      <a-sky src="#datacenterPano" rotation="0 -90 0"></a-sky>
+
+      <a-entity id="rig" position="0 0 2.5">
         <a-camera position="0 1.6 0"></a-camera>
         <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
         <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
       </a-entity>
 
-      <a-entity id="welcomeSign" position="0 3.5 -0.5" rotation="10 0 0">
-        <a-plane color="#1F2833" width="5" height="1.2" opacity="0.9" material="shader: flat; side: double"></a-plane>
-        <a-text value="Have you ever wondered how Gemini LLM works?" align="center" position="0 0.2 0.05" scale="0.8 0.8 0.8" color="#66FCF1"></a-text>
-        <a-text value="Interact with the stations below to step inside the AI's brain." align="center" position="0 -0.3 0.05" scale="0.45 0.45 0.45" color="#FFF"></a-text>
+      <a-entity id="welcomeContainer" position="0 1.6 -1.5" scale="1.5 1.5 1.5">
+          <a-torus id="startTrigger" class="clickable" radius="0.4" radius-tubular="0.02" color="#66FCF1"
+                   material="emissive: #66FCF1; emissiveIntensity: 2; shader: flat"
+                   animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear">
+              <a-text value="EXPLORE\nSPATIAL AI" align="center" position="0 0 0.05" scale="0.4 0.4 0.4" color="#0B0C10"></a-text>
+          </a-torus>
+
+          <a-entity id="welcomePanel" position="0 1.0 -0.5" visible="false"
+                    animation="property: position; from: 0 0 0; to: 0 1.0 -0.5; dur: 1500; startEvents: showWelcomePanel; easing: easeOutElastic">
+            <a-plane color="#111" width="5.5" height="1.4" opacity="0.95" material="shader: flat; side: double"></a-plane>
+            <a-text value="Have you ever wondered how Gemini LLM works?" align="center" position="0 0.25 0.05" scale="0.85 0.85 0.85" color="#66FCF1"></a-text>
+            <a-text value="Step inside the AI's 'brain' and explore the spatial pipeline:\n[Chop Data into Tokens] -> [Make Connections] -> [Predict Next Word]\n\nClick the pink blocks at the stations to learn more." align="center" position="0 -0.35 0.05" scale="0.4 0.4 0.4" color="#FFF"></a-text>
+          </a-entity>
       </a-entity>
 
-      <a-entity id="station1" position="-3.5 0 -3">
+
+      <a-entity id="station1" position="-4.5 0 -2" scale="1.5 1.5 1.5">
         <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
         
         <a-box id="textBlock" class="clickable" position="0 1.5 0" depth="0.3" height="0.3" width="0.8" color="#EF2D5E" 
@@ -52,23 +64,23 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="station2" position="0 0 -3">
+      <a-entity id="station2" position="0 0 -2" scale="1.5 1.5 1.5">
         <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
 
         <a-entity id="attentionWeb" position="0 1.8 0">
           <a-box id="centerToken" class="clickable" position="0 0 0" scale="0.15 0.15 0.15" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 0.5"
                  animation="property: rotation; to: 360 360 0; loop: true; dur: 6000; easing: linear">
-                 <a-text value="bark" align="center" position="0 0.8 0" scale="3 3 3" color="white" look-at="#rig"></a-text>
+                 <a-text value="bark" align="center" position="0 0.8 0" scale="3 3 3" color="white"></a-text>
           </a-box>
 
           <a-box class="contextToken" position="-0.8 0.5 -0.2" scale="0.1 0.1 0.1" color="#45A29E">
-            <a-text value="tree" align="center" position="0 0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+            <a-text value="tree" align="center" position="0 0.8 0" scale="4 4 4" color="white"></a-text>
           </a-box>
           <a-box class="contextToken" position="0.8 0.2 0.3" scale="0.1 0.1 0.1" color="#45A29E">
-            <a-text value="dog" align="center" position="0 0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+            <a-text value="dog" align="center" position="0 0.8 0" scale="4 4 4" color="white"></a-text>
           </a-box>
           <a-box class="contextToken" position="0 -0.6 0.4" scale="0.1 0.1 0.1" color="#45A29E">
-            <a-text value="loud" align="center" position="0 -0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+            <a-text value="loud" align="center" position="0 -0.8 0" scale="4 4 4" color="white"></a-text>
           </a-box>
         </a-entity>
 
@@ -80,7 +92,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="station3" position="3.5 0 -3">
+      <a-entity id="station3" position="4.5 0 -2" scale="1.5 1.5 1.5">
         <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
 
         <a-plane position="0 2 0" width="2" height="0.8" color="#1F2833">
@@ -109,6 +121,15 @@
     </a-scene>
 
     <script>
+      // --- Primary Hook Logic (Welcome) ---
+      const startTrigger = document.querySelector('#startTrigger');
+      const welcomePanel = document.querySelector('#welcomePanel');
+
+      startTrigger.addEventListener('click', function () {
+        welcomePanel.setAttribute('visible', 'true');
+        welcomePanel.emit('showWelcomePanel'); // Triggers the animated pop-up
+      });
+
       // --- Station 1 Logic (Tokenization) ---
       const textBlock = document.querySelector('#textBlock');
       const infoPanel1 = document.querySelector('#infoPanel1');
