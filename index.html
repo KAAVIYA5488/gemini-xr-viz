@@ -2,121 +2,120 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>LLM WebXR Viz - Final Stable Version</title>
+    <title>LLM WebXR Viz - Dynamic Objects, Static Text</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   </head>
   <body>
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       
       <a-sky color="#030308"></a-sky>
-      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#090914" material="roughness: 0.2; metalness: 0.8"></a-plane>
-      <a-grid src="https://cdn.aframe.io/images/grid.png" position="0 0.01 0" cell-color="#1F2833"></a-grid>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="50" height="50" color="#090914" material="roughness: 0.2; metalness: 0.8"></a-plane>
+      <a-grid src="https://cdn.aframe.io/images/grid.png" position="0 0.01 0"></a-grid>
 
-      <a-entity position="0 10 -20">
-        <a-sphere radius="22" material="color: #EF2D5E; transparent: true; opacity: 0.05; shader: flat"></a-sphere>
-        <a-sphere radius="15" material="color: #8C52FF; transparent: true; opacity: 0.08; shader: flat"></a-sphere>
-        <a-sphere radius="8" material="color: #00E5FF; transparent: true; opacity: 0.12; shader: flat"></a-sphere>
+      <a-entity position="0 8 -15">
+        <a-sphere radius="18" material="color: #EF2D5E; transparent: true; opacity: 0.05; shader: flat"></a-sphere>
+        <a-sphere radius="12" material="color: #8C52FF; transparent: true; opacity: 0.1; shader: flat"></a-sphere>
+        <a-sphere radius="6" material="color: #00E5FF; transparent: true; opacity: 0.15; shader: flat"></a-sphere>
       </a-entity>
 
-      <a-entity id="rig" position="0 0 3">
+      <a-entity id="rig" position="0 0 2.5">
         <a-camera position="0 1.6 0"></a-camera>
         <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
         <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
       </a-entity>
 
-      <a-entity id="aiAvatar" position="3.5 2.2 -1.5" rotation="0 -20 0" animation="property: position; to: 3.5 2.3 -1.5; dir: alternate; dur: 3000; loop: true; easing: easeInOutSine">
+      <a-entity id="aiAvatar" position="3 2.5 -1.5" rotation="0 -15 0" animation="property: position; to: 3 2.6 -1.5; dir: alternate; dur: 3000; loop: true; easing: easeInOutSine">
         <a-sphere radius="0.1" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 1"></a-sphere>
-        <a-icosahedron radius="0.22" color="#66FCF1" wireframe="true" animation="property: rotation; to: 360 360 0; dur: 8000; loop: true; easing: linear"></a-icosahedron>
+        <a-icosahedron radius="0.2" color="#66FCF1" wireframe="true" animation="property: rotation; to: 360 360 0; dur: 6000; loop: true; easing: linear"></a-icosahedron>
         
-        <a-plane position="-1.5 0 0" width="2.4" height="1" color="#0B0C10" opacity="0.95" material="shader: flat">
-          <a-text id="aiText" value="System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and begin." align="center" position="0 0.15 0.05" scale="0.45 0.45 0.45" color="#66FCF1"></a-text>
+        <a-plane position="-1.4 -0.2 0" width="2.2" height="0.9" color="#0B0C10" opacity="0.9" material="shader: flat">
+          <a-text id="aiText" value="System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and enter the\nneural network." align="center" position="0 0.1 0.05" scale="0.45 0.45 0.45" color="#66FCF1"></a-text>
         </a-plane>
 
-        <a-box id="navBtn" class="clickable" position="-1.5 -0.5 0.05" width="1.2" height="0.2" depth="0.05" color="#66FCF1"
+        <a-box id="navBtn" class="clickable" position="-1.4 -0.45 0.05" width="1" height="0.15" depth="0.05" color="#66FCF1"
                animation__click="property: scale; to: 0.9 0.9 0.9; dur: 100; startEvents: click; dir: alternate; loop: 1">
-          <a-text id="navText" value="START TOUR >" align="center" position="0 0 0.03" color="#0B0C10" scale="0.45 0.45 0.45"></a-text>
+          <a-text id="navText" value="START TOUR >" align="center" position="0 0 0.03" color="#0B0C10" scale="0.4 0.4 0.4"></a-text>
         </a-box>
       </a-entity>
 
-      <a-entity id="scene0" visible="true" position="0 1.6 -2.5">
-        <a-text value="LET US LEARN\nHOW GEMINI WORKS" align="center" width="8" color="#FFF" font="mozillavr"></a-text>
-        <a-text value="A Spatial AI Deep Dive" position="0 -0.8 0" align="center" width="5" color="#66FCF1"></a-text>
+      <a-entity id="scene0" visible="true" position="0 0 -2">
+        <a-torus radius="1.2" radius-tubular="0.01" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 0.5" animation="property: rotation; to: 0 360 360; dur: 12000; loop: true; easing: linear"></a-torus>
+        <a-torus radius="1.0" radius-tubular="0.02" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 1" animation="property: rotation; to: 360 0 360; dur: 8000; loop: true; easing: linear"></a-torus>
+        
+        <a-text value="LET US LEARN HOW GEMINI WORKS" align="center" position="0 0 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
       </a-entity>
 
-      <a-entity id="scene1" visible="false" position="0 0 -2" scale="1.4 1.4 1.4">
-        <a-cylinder position="0 0.5 0" radius="0.6" height="1" color="#1F2833"></a-cylinder>
+      <a-entity id="scene1" visible="false" position="0 0 -2" scale="1.5 1.5 1.5">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#8C52FF" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
         
-        <a-entity id="textBlock" class="clickable" position="0 1.6 0">
-           <a-box depth="0.3" height="0.4" width="1.4" color="#EF2D5E" animation="property: rotation; to: 360 360 0; dur: 10000; loop: true; easing: linear"></a-box>
-           <a-text value="The dog barks at the..." align="center" position="0 0 0.22" scale="0.6 0.6 0.6" color="white"></a-text>
+        <a-entity id="textBlock" class="clickable" position="0 1.5 0">
+           <a-box depth="0.3" height="0.3" width="1.2" color="#EF2D5E" animation="property: rotation; to: 360 360 0; loop: true; dur: 8000; easing: linear"></a-box>
+           <a-text value="The dog barks at the..." align="center" position="0 0 0.25" scale="0.5 0.5 0.5" color="white"></a-text>
         </a-entity>
         
-        <a-entity id="tokenContainer" position="0 1.6 0" visible="false">
-          <a-entity class="token_ent" position="0 0 0" animation__pos="property: position; to: -0.7 0.4 0.3; dur: 1000; startEvents: shatter">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 1"></a-box>
-             <a-text value="The" align="center" position="0 0.25 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
-          </a-entity>
-          <a-entity class="token_ent" position="0 0 0" animation__pos="property: position; to: -0.2 0.6 -0.1; dur: 1200; startEvents: shatter">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 1"></a-box>
-             <a-text value="dog" align="center" position="0 0.25 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
-          </a-entity>
-          <a-entity class="token_ent" position="0 0 0" animation__pos="property: position; to: 0.3 -0.3 0.4; dur: 900; startEvents: shatter">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 1"></a-box>
-             <a-text value="barks" align="center" position="0 0.25 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
-          </a-entity>
-          <a-entity class="token_ent" position="0 0 0" animation__pos="property: position; to: 0.8 0.2 -0.2; dur: 1100; startEvents: shatter">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 1"></a-box>
-             <a-text value="at" align="center" position="0 0.25 0" scale="0.8 0.8 0.8" color="#FFF"></a-text>
-          </a-entity>
+        <a-entity id="tokenContainer" position="0 1.5 0" visible="false">
+          <a-box class="token" scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 0.8" 
+                 animation__pos="property: position; to: -0.6 0.3 0.2; dur: 1000; startEvents: shatter"
+                 animation__rot="property: rotation; to: 360 360 360; loop: true; dur: 4000; easing: linear"></a-box>
+          <a-box class="token" scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 0.8" 
+                 animation__pos="property: position; to: -0.2 0.5 -0.1; dur: 1200; startEvents: shatter"
+                 animation__rot="property: rotation; to: 0 360 360; loop: true; dur: 3500; easing: linear"></a-box>
+          <a-box class="token" scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 0.8" 
+                 animation__pos="property: position; to: 0.2 -0.2 0.3; dur: 900; startEvents: shatter"
+                 animation__rot="property: rotation; to: 360 0 360; loop: true; dur: 4500; easing: linear"></a-box>
+          <a-box class="token" scale="0.1 0.1 0.1" color="#00E5FF" material="emissive: #00E5FF; emissiveIntensity: 0.8" 
+                 animation__pos="property: position; to: 0.6 0.1 -0.2; dur: 1100; startEvents: shatter"
+                 animation__rot="property: rotation; to: 360 360 0; loop: true; dur: 5000; easing: linear"></a-box>
         </a-entity>
       </a-entity>
 
-      <a-entity id="scene2" visible="false" position="0 0 -2" scale="1.4 1.4 1.4">
-        <a-cylinder position="0 0.5 0" radius="0.6" height="1" color="#1F2833"></a-cylinder>
+      <a-entity id="scene2" visible="false" position="0 0 -2" scale="1.5 1.5 1.5">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#8C52FF" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
         <a-entity id="attentionWeb" position="0 1.8 0">
           
           <a-entity position="0 0 0">
-             <a-box id="centerToken" class="clickable" scale="0.15 0.15 0.15" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 1" 
-                    animation="property: rotation; to: 360 360 0; dur: 6000; loop: true; easing: linear"></a-box>
-             <a-text value="barks" align="center" position="0 0.35 0" scale="0.9 0.9 0.9" color="#FFF"></a-text>
+             <a-box id="centerToken" class="clickable" scale="0.15 0.15 0.15" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 0.5" 
+                    animation="property: rotation; to: 360 360 0; loop: true; dur: 6000; easing: linear"></a-box>
+             <a-text value="barks" align="center" position="0 0.25 0" scale="0.6 0.6 0.6" color="#FFF" look-at="#rig"></a-text>
           </a-entity>
 
-          <a-entity position="-1.2 0.6 -0.3">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF"></a-box>
-             <a-text value="The" align="center" position="0 0.3 0" scale="0.7 0.7 0.7" color="#FFF"></a-text>
+          <a-entity position="-0.8 0.5 -0.2">
+             <a-box scale="0.1 0.1 0.1" color="#00E5FF" animation="property: rotation; to: 360 360 360; loop: true; dur: 8000; easing: linear"></a-box>
+             <a-text value="The" align="center" position="0 0.2 0" scale="0.5 0.5 0.5" color="#FFF" look-at="#rig"></a-text>
           </a-entity>
           
-          <a-entity position="1.2 0.3 0.4">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF"></a-box>
-             <a-text value="dog" align="center" position="0 0.3 0" scale="0.7 0.7 0.7" color="#FFF"></a-text>
+          <a-entity position="0.8 0.2 0.3">
+             <a-box scale="0.1 0.1 0.1" color="#00E5FF" animation="property: rotation; to: 0 360 360; loop: true; dur: 7000; easing: linear"></a-box>
+             <a-text value="dog" align="center" position="0 0.2 0" scale="0.5 0.5 0.5" color="#FFF" look-at="#rig"></a-text>
           </a-entity>
 
-          <a-entity position="0 -0.8 0.5">
-             <a-box scale="0.1 0.1 0.1" color="#00E5FF"></a-box>
-             <a-text value="at" align="center" position="0 0.3 0" scale="0.7 0.7 0.7" color="#FFF"></a-text>
+          <a-entity position="0 -0.6 0.4">
+             <a-box scale="0.1 0.1 0.1" color="#00E5FF" animation="property: rotation; to: 360 0 360; loop: true; dur: 9000; easing: linear"></a-box>
+             <a-text value="at" align="center" position="0 0.2 0" scale="0.5 0.5 0.5" color="#FFF" look-at="#rig"></a-text>
           </a-entity>
         </a-entity>
       </a-entity>
 
-      <a-entity id="scene3" visible="false" position="0 0 -2" scale="1.4 1.4 1.4">
-        <a-cylinder position="0 0.5 0" radius="0.6" height="1" color="#1F2833"></a-cylinder>
+      <a-entity id="scene3" visible="false" position="0 0 -2" scale="1.5 1.5 1.5">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#8C52FF" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
         
-        <a-plane position="0 2.4 0" width="2.6" height="1.6" color="#0B0C10" opacity="0.9">
-          <a-text value="AI PREDICTION PROBABILITIES" align="center" position="0 0.65 0.05" scale="0.4 0.4 0.4" color="#8C52FF"></a-text>
+        <a-plane position="0 2.2 0" width="2.2" height="1.4" color="#1F2833" opacity="0.9">
+          <a-text value="AI PREDICTION PROBABILITIES" align="center" position="0 0.55 0.05" scale="0.35 0.35 0.35" color="#8C52FF"></a-text>
           
-          <a-text id="prob1" value="mailman (88%)" align="center" position="0 0.3 0.05" scale="0.6 0.6 0.6" color="#00E5FF"></a-text>
-          <a-text id="prob2" value="cat (10%)" align="center" position="0 0.05 0.05" scale="0.5 0.5 0.5" color="#FFF"></a-text>
-          <a-text id="prob3" value="UFO (2%)" align="center" position="0 -0.2 0.05" scale="0.4 0.4 0.4" color="#666"></a-text>
+          <a-text id="prob1" value="mailman (88%)" align="center" position="0 0.3 0.05" scale="0.5 0.5 0.5" color="#00E5FF"></a-text>
+          <a-text id="prob2" value="cat (10%)" align="center" position="0 0.1 0.05" scale="0.4 0.4 0.4" color="#FFF"></a-text>
+          <a-text id="prob3" value="UFO (2%)" align="center" position="0 -0.1 0.05" scale="0.3 0.3 0.3" color="#666"></a-text>
           
-          <a-plane position="0 -0.45 0.05" width="2.2" height="0.02" color="#333"></a-plane>
+          <a-plane position="0 -0.35 0.05" width="2" height="0.02" color="#333"></a-plane>
           
-          <a-text id="outputText" value="Result: The dog barks at the mailman" align="center" position="0 -0.65 0.05" scale="0.5 0.5 0.5" color="#00E5FF"></a-text>
+          <a-text id="outputText" value="Result: The dog barks at the mailman" align="center" position="0 -0.5 0.05" scale="0.45 0.45 0.45" color="#00E5FF"></a-text>
         </a-plane>
 
         <a-entity position="0 1.2 0.2">
-          <a-box id="tempToggle" class="clickable" position="0 0 0" depth="0.2" height="0.3" width="1.4" color="#00E5FF"
+          <a-box id="tempToggle" class="clickable" position="0 0 0" depth="0.2" height="0.25" width="1.2" color="#00E5FF"
                  animation__click="property: scale; to: 0.95 0.95 0.95; dur: 100; startEvents: click; dir: alternate; loop: 1">
-             <a-text id="tempText" value="Temperature: LOW\n(Safe Guess)" align="center" position="0 0 0.11" scale="0.4 0.4 0.4" color="#0B0C10"></a-text>
+             <a-text id="tempText" value="Temperature: LOW\n(Safe Guess)" align="center" position="0 0 0.11" scale="0.35 0.35 0.35" color="#0B0C10"></a-text>
           </a-box>
         </a-entity>
       </a-entity>
@@ -164,7 +163,7 @@
 
       function speakDialogue(text) {
         if (synth.speaking) synth.cancel(); 
-        const cleanText = text.replace(/\n/g, ' '); 
+        const cleanText = text.replace(/\n/g, ' ').replace(/>/g, ''); 
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.pitch = 1.1; 
         utterance.rate = 1.0;
@@ -172,7 +171,7 @@
       }
 
       // ==========================================
-      // SCENE MANAGEMENT
+      // SCENE MANAGEMENT & LOGIC
       // ==========================================
       let currentStep = 0; 
       const scenes = [
@@ -188,7 +187,7 @@
 
       const dialogue = [
         "System Ready.", 
-        "Welcome! Let's process the sentence: 'The dog barks at the...'\n\nStep 1: Tokenization.\nI break the sentence into puzzle pieces called tokens.\n\nClick the pink block to chop it up.",
+        "Welcome to the simulator! Let's process the sentence: 'The dog barks at the...'\n\nStep 1: Tokenization.\nI don't read words. I break the sentence\ninto puzzle pieces called tokens.\n\nClick the pink block to chop it up.",
         "Step 2: Self-Attention.\nHow do I know what 'barks' means?\nI connect it to surrounding tokens.\n\nClick 'barks' to see its connections.",
         "Step 3: Probabilities & Temperature.\nI guess the next word based on math.\nLow Temp = Safest guess.\nHigh Temp = Creative guess.\n\nToggle the Temperature to see!"
       ];
@@ -198,13 +197,13 @@
         playSound('click');
 
         scenes[currentStep].setAttribute('visible', 'false');
-        currentStep++;
         
+        currentStep++;
         if (currentStep >= scenes.length) {
           currentStep = 0; 
           resetInteractions(); 
           scenes[0].setAttribute('visible', 'true');
-          aiText.setAttribute('value', "System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and begin.");
+          aiText.setAttribute('value', "System Ready.\n\nClick 'START TOUR' below to\ninitialize audio and enter the\nneural network.");
           navText.setAttribute('value', 'START TOUR >');
           return;
         }
@@ -217,12 +216,14 @@
         else navText.setAttribute('value', 'NEXT STATION >');
       });
 
-      // --- Interactive Logic ---
+      // --- Interactive Logic for Stations ---
       const textBlock = document.querySelector('#textBlock');
       const tokenContainer = document.querySelector('#tokenContainer');
-      const tokens = document.querySelectorAll('.token_ent');
+      const tokens = document.querySelectorAll('.token');
+      
       const centerToken = document.querySelector('#centerToken');
       const attentionWeb = document.querySelector('#attentionWeb');
+      
       const tempToggle = document.querySelector('#tempToggle');
       const tempText = document.querySelector('#tempText');
       const prob1 = document.querySelector('#prob1');
@@ -234,10 +235,13 @@
 
       textBlock.addEventListener('click', () => {
         playSound('chime');
+        // Disable click on the wrapper after it shatters
+        textBlock.classList.remove('clickable');
         textBlock.setAttribute('visible', 'false');
         tokenContainer.setAttribute('visible', 'true');
         tokens.forEach(t => t.emit('shatter'));
-        const responseText = "Excellent. The text is now vectorized.\nClick Next Station.";
+        
+        const responseText = "Excellent. The text is now vectorized.\nI can process these pieces instantly.\n\nClick Next Station.";
         aiText.setAttribute('value', responseText);
         speakDialogue(responseText); 
       });
@@ -245,10 +249,12 @@
       centerToken.addEventListener('click', () => {
         playSound('chime');
         centerToken.setAttribute('color', '#00E5FF');
-        attentionWeb.setAttribute('line__1', 'start: 0 0 0; end: -1.2 0.6 -0.3; color: #00E5FF; opacity: 0.8');
-        attentionWeb.setAttribute('line__2', 'start: 0 0 0; end: 1.2 0.3 0.4; color: #00E5FF; opacity: 0.8');
-        attentionWeb.setAttribute('line__3', 'start: 0 0 0; end: 0 -0.8 0.5; color: #EF2D5E; opacity: 0.3');
-        const responseText = "'Barks' has a strong link to 'dog'.\nThis gives me context.\nClick Next Station.";
+        centerToken.setAttribute('material', 'emissive: #00E5FF; emissiveIntensity: 1');
+        attentionWeb.setAttribute('line__1', 'start: 0 0 0; end: -0.8 0.5 -0.2; color: #00E5FF; opacity: 0.8');
+        attentionWeb.setAttribute('line__2', 'start: 0 0 0; end: 0.8 0.2 0.3; color: #00E5FF; opacity: 0.8');
+        attentionWeb.setAttribute('line__3', 'start: 0 0 0; end: 0 -0.6 0.4; color: #EF2D5E; opacity: 0.3');
+        
+        const responseText = "'Barks' has a strong mathematical link\nto 'dog', but a weak link to 'at'.\nThis gives me context.\n\nClick Next Station.";
         aiText.setAttribute('value', responseText);
         speakDialogue(responseText); 
       });
@@ -259,32 +265,72 @@
         if(isHighTemp) {
           tempToggle.setAttribute('color', '#EF2D5E');
           tempText.setAttribute('value', 'Temperature: HIGH\n(Creative Guess)');
-          prob1.setAttribute('value', 'mailman (35%)'); prob1.setAttribute('color', '#FFF');
-          prob3.setAttribute('value', 'UFO (25%)'); prob3.setAttribute('color', '#EF2D5E');
+          tempText.setAttribute('color', '#FFF');
+          
+          prob1.setAttribute('value', 'mailman (35%)');
+          prob1.setAttribute('color', '#FFF');
+          prob1.setAttribute('scale', '0.4 0.4 0.4');
+          
+          prob2.setAttribute('value', 'cat (30%)');
+          prob2.setAttribute('color', '#FFF');
+          
+          prob3.setAttribute('value', 'UFO (25%)');
+          prob3.setAttribute('color', '#EF2D5E'); 
+          prob3.setAttribute('scale', '0.5 0.5 0.5');
+
           outputText.setAttribute('value', 'Result: The dog barks at the UFO');
           outputText.setAttribute('color', '#EF2D5E');
+          
         } else {
           tempToggle.setAttribute('color', '#00E5FF');
           tempText.setAttribute('value', 'Temperature: LOW\n(Safe Guess)');
-          prob1.setAttribute('value', 'mailman (88%)'); prob1.setAttribute('color', '#00E5FF');
-          prob3.setAttribute('value', 'UFO (2%)'); prob3.setAttribute('color', '#666');
+          tempText.setAttribute('color', '#0B0C10');
+          
+          prob1.setAttribute('value', 'mailman (88%)');
+          prob1.setAttribute('color', '#00E5FF'); 
+          prob1.setAttribute('scale', '0.5 0.5 0.5');
+          
+          prob2.setAttribute('value', 'cat (10%)');
+          prob2.setAttribute('color', '#FFF');
+          prob2.setAttribute('scale', '0.4 0.4 0.4');
+          
+          prob3.setAttribute('value', 'UFO (2%)');
+          prob3.setAttribute('color', '#666');
+          prob3.setAttribute('scale', '0.3 0.3 0.3');
+
           outputText.setAttribute('value', 'Result: The dog barks at the mailman');
           outputText.setAttribute('color', '#00E5FF');
         }
       });
 
       function resetInteractions() {
+          textBlock.classList.add('clickable');
           textBlock.setAttribute('visible', 'true');
           tokenContainer.setAttribute('visible', 'false');
+          
           centerToken.setAttribute('color', '#EF2D5E');
+          centerToken.setAttribute('material', 'emissive: #EF2D5E; emissiveIntensity: 0.5');
           attentionWeb.removeAttribute('line__1');
           attentionWeb.removeAttribute('line__2');
           attentionWeb.removeAttribute('line__3');
+          
           isHighTemp = false;
           tempToggle.setAttribute('color', '#00E5FF');
           tempText.setAttribute('value', 'Temperature: LOW\n(Safe Guess)');
-          prob1.setAttribute('value', 'mailman (88%)'); prob1.setAttribute('color', '#00E5FF');
-          prob3.setAttribute('value', 'UFO (2%)'); prob3.setAttribute('color', '#666');
+          tempText.setAttribute('color', '#0B0C10');
+          
+          prob1.setAttribute('value', 'mailman (88%)');
+          prob1.setAttribute('color', '#00E5FF');
+          prob1.setAttribute('scale', '0.5 0.5 0.5');
+          
+          prob2.setAttribute('value', 'cat (10%)');
+          prob2.setAttribute('color', '#FFF');
+          prob2.setAttribute('scale', '0.4 0.4 0.4');
+          
+          prob3.setAttribute('value', 'UFO (2%)');
+          prob3.setAttribute('color', '#666');
+          prob3.setAttribute('scale', '0.3 0.3 0.3');
+
           outputText.setAttribute('value', 'Result: The dog barks at the mailman');
           outputText.setAttribute('color', '#00E5FF'); 
       }
