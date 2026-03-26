@@ -2,24 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>LLM WebXR Viz - Station 1: The Chopper</title>
+    <title>LLM WebXR Viz - Complete Pipeline</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       
-      <a-entity environment="preset: default; skyType: atmosphere; lighting: point; groundColor: #e0e0e0; groundColor2: #fafafa; grid: cross"></a-entity>
+      <a-sky color="#0B0C10"></a-sky>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="30" color="#1F2833" material="roughness: 0.4; metalness: 0.6"></a-plane>
+      <a-grid src="https://cdn.aframe.io/images/grid.png" position="0 0.01 0"></a-grid>
 
-      <a-entity id="rig" position="0 0 2">
+      <a-entity id="rig" position="0 0 3">
         <a-camera position="0 1.6 0"></a-camera>
         <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
         <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
       </a-entity>
 
-      <a-entity id="station1" position="0 0 -2">
-        
-        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#4CC3D9" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
+      <a-entity id="welcomeSign" position="0 3.5 -0.5" rotation="10 0 0">
+        <a-plane color="#1F2833" width="5" height="1.2" opacity="0.9" material="shader: flat; side: double"></a-plane>
+        <a-text value="Have you ever wondered how Gemini LLM works?" align="center" position="0 0.2 0.05" scale="0.8 0.8 0.8" color="#66FCF1"></a-text>
+        <a-text value="Interact with the stations below to step inside the AI's brain." align="center" position="0 -0.3 0.05" scale="0.45 0.45 0.45" color="#FFF"></a-text>
+      </a-entity>
+
+      <a-entity id="station1" position="-3.5 0 -3">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
         
         <a-box id="textBlock" class="clickable" position="0 1.5 0" depth="0.3" height="0.3" width="0.8" color="#EF2D5E" 
                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
@@ -27,55 +33,161 @@
         </a-box>
 
         <a-entity id="tokenContainer" position="0 1.5 0" visible="false">
-          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#FFFF00" material="emissive: #FFFF00; emissiveIntensity: 0.6"
+          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#66FCF1" material="emissive: #66FCF1; emissiveIntensity: 0.8"
                  animation__pos="property: position; to: -0.4 0.3 0.2; dur: 1000; startEvents: shatter; easing: easeOutQuad"
                  animation__rot="property: rotation; to: 45 90 45; dur: 1000; startEvents: shatter; loop: true"></a-box>
-          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#00FFFF" material="emissive: #00FFFF; emissiveIntensity: 0.6"
+          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#66FCF1" material="emissive: #66FCF1; emissiveIntensity: 0.8"
                  animation__pos="property: position; to: 0.4 0.4 -0.1; dur: 1200; startEvents: shatter; easing: easeOutQuad"
                  animation__rot="property: rotation; to: 90 45 0; dur: 1200; startEvents: shatter; loop: true"></a-box>
-          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#FF00FF" material="emissive: #FF00FF; emissiveIntensity: 0.6"
+          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#66FCF1" material="emissive: #66FCF1; emissiveIntensity: 0.8"
                  animation__pos="property: position; to: 0.1 -0.3 0.4; dur: 900; startEvents: shatter; easing: easeOutQuad"
                  animation__rot="property: rotation; to: 0 90 90; dur: 900; startEvents: shatter; loop: true"></a-box>
-          <a-box class="token" position="0 0 0" scale="0.1 0.1 0.1" color="#00FF00" material="emissive: #00FF00; emissiveIntensity: 0.6"
-                 animation__pos="property: position; to: -0.2 -0.4 -0.3; dur: 1100; startEvents: shatter; easing: easeOutQuad"
-                 animation__rot="property: rotation; to: 180 0 90; dur: 1100; startEvents: shatter; loop: true"></a-box>
         </a-entity>
 
-        <a-entity id="infoPanel" position="0 2.5 0" visible="false"
+        <a-entity id="infoPanel1" position="0 2.5 0" visible="false"
                   animation="property: position; from: 0 1.5 0; to: 0 2.8 0; dur: 1500; startEvents: showPanel; easing: easeOutElastic">
-          <a-plane color="#111" height="1" width="2.4" opacity="0.85" material="shader: flat"></a-plane>
+          <a-plane color="#0B0C10" height="1" width="2.4" opacity="0.9" material="shader: flat; side: double"></a-plane>
           <a-text value="What is a Token?\n\nInstead of reading whole words, the AI breaks\ninformation into small puzzle pieces called\ntokens to process them much faster." 
-                  color="#4CC3D9" align="center" position="0 0 0.05" scale="0.5 0.5 0.5" font="mozillavr"></a-text>
+                  color="#66FCF1" align="center" position="0 0 0.05" scale="0.5 0.5 0.5"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="station2" position="0 0 -3">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
+
+        <a-entity id="attentionWeb" position="0 1.8 0">
+          <a-box id="centerToken" class="clickable" position="0 0 0" scale="0.15 0.15 0.15" color="#EF2D5E" material="emissive: #EF2D5E; emissiveIntensity: 0.5"
+                 animation="property: rotation; to: 360 360 0; loop: true; dur: 6000; easing: linear">
+                 <a-text value="bark" align="center" position="0 0.8 0" scale="3 3 3" color="white" look-at="#rig"></a-text>
+          </a-box>
+
+          <a-box class="contextToken" position="-0.8 0.5 -0.2" scale="0.1 0.1 0.1" color="#45A29E">
+            <a-text value="tree" align="center" position="0 0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+          </a-box>
+          <a-box class="contextToken" position="0.8 0.2 0.3" scale="0.1 0.1 0.1" color="#45A29E">
+            <a-text value="dog" align="center" position="0 0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+          </a-box>
+          <a-box class="contextToken" position="0 -0.6 0.4" scale="0.1 0.1 0.1" color="#45A29E">
+            <a-text value="loud" align="center" position="0 -0.8 0" scale="4 4 4" color="white" look-at="#rig"></a-text>
+          </a-box>
         </a-entity>
 
+        <a-entity id="infoPanel2" position="0 3.0 0" visible="false"
+                  animation="property: position; from: 0 1.8 0; to: 0 3.2 0; dur: 1500; startEvents: showPanel; easing: easeOutElastic">
+          <a-plane color="#0B0C10" height="1.2" width="2.6" opacity="0.9" material="shader: flat; side: double"></a-plane>
+          <a-text value="Making Connections (Self-Attention)\n\nThe AI figures out context by looking at how each\npuzzle piece relates to the others.\n\nNotice how 'bark' connects differently\nbased on whether 'dog' or 'tree' is nearby." 
+                  color="#66FCF1" align="center" position="0 0 0.05" scale="0.45 0.45 0.45"></a-text>
+        </a-entity>
       </a-entity>
+
+      <a-entity id="station3" position="3.5 0 -3">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="#45A29E" material="roughness: 0.2; metalness: 0.1"></a-cylinder>
+
+        <a-plane position="0 2 0" width="2" height="0.8" color="#1F2833">
+          <a-text id="outputText" value="The dog barks at the..." align="center" position="0 0 0.05" scale="0.5 0.5 0.5" color="#FFF"></a-text>
+        </a-plane>
+
+        <a-entity position="0 1.2 0.2">
+          <a-box id="generateBtn" class="clickable" position="-0.5 0 0" depth="0.2" height="0.2" width="0.8" color="#EF2D5E"
+                 animation__click="property: position; to: -0.5 -0.05 0; dur: 100; startEvents: click; dir: alternate; loop: 1">
+             <a-text value="Predict Next Word" align="center" position="0 0 0.11" scale="0.35 0.35 0.35" color="white"></a-text>
+          </a-box>
+
+          <a-box id="tempToggle" class="clickable" position="0.5 0 0" depth="0.2" height="0.2" width="0.8" color="#66FCF1">
+             <a-text id="tempText" value="Temperature: LOW" align="center" position="0 0 0.11" scale="0.35 0.35 0.35" color="#0B0C10"></a-text>
+          </a-box>
+        </a-entity>
+
+        <a-entity id="infoPanel3" position="0 3.2 0" visible="false"
+                  animation="property: position; from: 0 2.5 0; to: 0 3.2 0; dur: 1500; startEvents: showPanel; easing: easeOutElastic">
+          <a-plane color="#0B0C10" height="1.4" width="2.8" opacity="0.9" material="shader: flat; side: double"></a-plane>
+          <a-text value="Choosing the Next Word\n\nThe AI predicts the most likely next puzzle piece.\n\nChanging the 'Temperature' allows the AI\nto pick less obvious, more creative answers\ninstead of the most common one." 
+                  color="#66FCF1" align="center" position="0 0 0.05" scale="0.45 0.45 0.45"></a-text>
+        </a-entity>
+      </a-entity>
+
     </a-scene>
 
     <script>
-      // The logic that drives the interaction
+      // --- Station 1 Logic (Tokenization) ---
       const textBlock = document.querySelector('#textBlock');
-      const infoPanel = document.querySelector('#infoPanel');
+      const infoPanel1 = document.querySelector('#infoPanel1');
       const tokenContainer = document.querySelector('#tokenContainer');
       const tokens = document.querySelectorAll('.token');
       let isShattered = false;
 
       textBlock.addEventListener('click', function () {
-        if (isShattered) return; // Only allow this to happen once
+        if (isShattered) return;
         isShattered = true;
         
-        // 1. Hide the main text block and remove its clickability
         textBlock.setAttribute('visible', 'false');
         textBlock.classList.remove('clickable');
         
-        // 2. Reveal the token container and trigger the explode animation
         tokenContainer.setAttribute('visible', 'true');
-        tokens.forEach(token => {
-          token.emit('shatter'); // This fires the animation__pos and animation__rot
-        });
+        tokens.forEach(token => token.emit('shatter'));
         
-        // 3. Reveal and animate the educational pop-up panel
-        infoPanel.setAttribute('visible', 'true');
-        infoPanel.emit('showPanel'); // This fires the bounce animation
+        infoPanel1.setAttribute('visible', 'true');
+        infoPanel1.emit('showPanel');
+      });
+
+      // --- Station 2 Logic (Self-Attention) ---
+      const centerToken = document.querySelector('#centerToken');
+      const attentionWeb = document.querySelector('#attentionWeb');
+      const infoPanel2 = document.querySelector('#infoPanel2');
+      let isConnected = false;
+
+      centerToken.addEventListener('click', function () {
+        if (isConnected) return;
+        isConnected = true;
+
+        centerToken.setAttribute('color', '#66FCF1');
+        centerToken.setAttribute('material', 'emissive: #66FCF1; emissiveIntensity: 1');
+
+        attentionWeb.setAttribute('line__1', 'start: 0 0 0; end: -0.8 0.5 -0.2; color: #66FCF1; opacity: 0.8');
+        attentionWeb.setAttribute('line__2', 'start: 0 0 0; end: 0.8 0.2 0.3; color: #66FCF1; opacity: 0.8');
+        attentionWeb.setAttribute('line__3', 'start: 0 0 0; end: 0 -0.6 0.4; color: #EF2D5E; opacity: 0.3');
+
+        infoPanel2.setAttribute('visible', 'true');
+        infoPanel2.emit('showPanel');
+      });
+
+      // --- Station 3 Logic (Output & Temperature) ---
+      const generateBtn = document.querySelector('#generateBtn');
+      const tempToggle = document.querySelector('#tempToggle');
+      const tempText = document.querySelector('#tempText');
+      const outputText = document.querySelector('#outputText');
+      const infoPanel3 = document.querySelector('#infoPanel3');
+
+      let isHighTemp = false;
+      let hasGenerated = false;
+
+      tempToggle.addEventListener('click', function() {
+        isHighTemp = !isHighTemp;
+        if(isHighTemp) {
+          tempToggle.setAttribute('color', '#EF2D5E');
+          tempText.setAttribute('value', 'Temperature: HIGH');
+          tempText.setAttribute('color', '#FFF');
+        } else {
+          tempToggle.setAttribute('color', '#66FCF1');
+          tempText.setAttribute('value', 'Temperature: LOW');
+          tempText.setAttribute('color', '#0B0C10');
+        }
+      });
+
+      generateBtn.addEventListener('click', function() {
+        if(!hasGenerated) {
+          infoPanel3.setAttribute('visible', 'true');
+          infoPanel3.emit('showPanel');
+          hasGenerated = true;
+        }
+
+        if(isHighTemp) {
+          outputText.setAttribute('value', 'The dog barks at the... UFO');
+          outputText.setAttribute('color', '#EF2D5E'); 
+        } else {
+          outputText.setAttribute('value', 'The dog barks at the... mailman');
+          outputText.setAttribute('color', '#66FCF1'); 
+        }
       });
     </script>
   </body>
